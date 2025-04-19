@@ -283,10 +283,25 @@ if __name__ == '__main__':
     model.eval()
     model.cuda()
 
-    if (opt.real_path == None) or (opt.fake_path == None) or (opt.data_mode == None):
+    # if (opt.real_path == None) or (opt.fake_path == None) or (opt.data_mode == None):
+    #     dataset_paths = DATASET_PATHS
+    # else:
+    #     dataset_paths = [ dict(real_path=opt.real_path, fake_path=opt.fake_path, data_mode=opt.data_mode, key=opt.data_key) ]
+
+    if (opt.real_path is None) or (opt.fake_path is None) or (opt.data_mode is None):
         dataset_paths = DATASET_PATHS
     else:
-        dataset_paths = [ dict(real_path=opt.real_path, fake_path=opt.fake_path, data_mode=opt.data_mode, key=opt.data_key) ]
+        # Infer dataset name (key) from the real_path directory structure
+        # Example: For real_path = "datasets/test/progan/0_real", key = "progan"
+        path_components = os.path.normpath(opt.real_path).split(os.path.sep)
+        key = path_components[-2]  # Assumes structure: .../<dataset_name>/0_real
+        
+        dataset_paths = [{
+            'real_path': opt.real_path,
+            'fake_path': opt.fake_path,
+            'data_mode': opt.data_mode,
+            'key': key  # Add inferred key
+        }]
 
 
 
