@@ -266,6 +266,7 @@ if __name__ == '__main__':
 
     parser.add_argument('--jpeg_quality', type=int, default=None, help="100, 90, 80, ... 30. Used to test robustness of our model. Not apply if None")
     parser.add_argument('--gaussian_sigma', type=int, default=None, help="0,1,2,3,4.     Used to test robustness of our model. Not apply if None")
+    parser.add_argument('--data_key', type=str, default='custom', help='Identifier for the dataset when using custom paths')
 
 
     opt = parser.parse_args()
@@ -285,7 +286,7 @@ if __name__ == '__main__':
     if (opt.real_path == None) or (opt.fake_path == None) or (opt.data_mode == None):
         dataset_paths = DATASET_PATHS
     else:
-        dataset_paths = [ dict(real_path=opt.real_path, fake_path=opt.fake_path, data_mode=opt.data_mode) ]
+        dataset_paths = [ dict(real_path=opt.real_path, fake_path=opt.fake_path, data_mode=opt.data_mode, key=opt.data_key) ]
 
 
 
